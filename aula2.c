@@ -14,14 +14,15 @@ int main() {
 
     int escolha;
     int * matriz;
-    int ** ponteiroDaMatriz = &matriz;
     int tamanho;
 
+    //Escolhendo a dificuldade
     do {
         printf("Escolha o nivel de dificuldade (1 - facil, 2 - medio, 3 - dificil)\n");
         scanf(" %d", &escolha);
     } while (escolha != 1 && escolha != 2 && escolha != 3);
 
+    //Definindo o tamanho de acordo com a dificuldade escolhida
     if(escolha == 1) {
         tamanho = 9;
     } else if (escolha == 2) {
@@ -30,11 +31,34 @@ int main() {
         tamanho = 100;
     }
 
+    //Alocando o espaço na memória dinamicamente
     matriz = malloc(tamanho * sizeof(int));
 
+    //Ajeitando a função rand() para ela não mostrar resultados repetidos em execuções diferentes
+    srand(time(NULL));
+
+    //Iterando pela matriz para atribuir os valores
     for(int i = 0; i < tamanho; i++) {
-        ponteiroDaMatriz = 
+        *(matriz + i) = rand() % 10;
     }
 
-    printf("%d", ponteiroDaMatriz);
+    //Imprimindo a matriz
+    for (int i = 0; i < tamanho; i++) {
+        printf("%d ", *(matriz + i));
+    }
+
+    //Perguntando ao usuário qual a posição que ele vai apostar
+    printf("\nQual posicao voce acha que sera escolhida?\n");
+    scanf(" %d", &escolha);
+
+    //Escolhendo uma posição aleatória da matriz e apresentando resultado
+    int posicaoEscolhida = rand() % tamanho;
+
+    if(escolha == (posicaoEscolhida + 1)) {
+        printf("Parabens, voce acertou!\n");
+    } else {
+        printf("Poxa, mais sorte na proxima.\n");
+    }
+
+    printf("O numero escolhido foi: %d, na posicao %d.", *(matriz + posicaoEscolhida), (posicaoEscolhida + 1));
 }
